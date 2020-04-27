@@ -1,1 +1,21 @@
 
+server:
+  servlet:
+    context-path: /api/order-service
+
+spring:
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: orders
+
+customer-service:
+    url: http://localhost:8081/api/customer-service
+    endpoints:
+        findCustomerByCustomerNumber: /customer/{customerNumber}
+
+product-service:
+    url: http://localhost:8080/api/product-service
+    endpoints: 
+        findProductByProductNumber: /product/{productNumber}
