@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import br.com.orderservice.client.customer.CustomerClient;
 import br.com.orderservice.client.product.ProductClient;
 import br.com.orderservice.exception.CustomerServiceNotFoundException;
+import br.com.orderservice.exception.OrderNotExistsException;
 import br.com.orderservice.exception.ProductNotFoundException;
 import br.com.orderservice.model.Order;
 import br.com.orderservice.model.Product;
@@ -32,10 +33,16 @@ public class OrderService {
 	@Autowired
 	public OrderService(final OrderRepository repository, final CustomerClient customerClient,
 			final ProductClient productClient) {
-		
+
 		this.repository = repository;
 		this.customerClient = customerClient;
 		this.productClient = productClient;
+	}
+
+	public OrderResponse findOrderByOrderNumber(final Long orderNumber) {
+		final var entity = repository.findByOrderNumber(orderNumber).orElseThrow(OrderNotExistsException::new);
+
+		return OrderResponse.builder().entity(entity).build();
 	}
 
 	public OrderResponse create(final OrderPayload payload) {
@@ -53,16 +60,16 @@ public class OrderService {
 		final var total = sumTotal(entity.getProducts());
 
 		entity.setTotal(total);
-		
+
 		return entity;
 	}
 
 	private BigDecimal sumTotal(final Collection<Product> product) {
 		var total = ZERO;
-		
+
 		for (var p : product)
 			total = total.add(getProductPrice(p.getProductNumber()).multiply(new BigDecimal(p.getAmount())));
-			
+
 		return total;
 	}
 
