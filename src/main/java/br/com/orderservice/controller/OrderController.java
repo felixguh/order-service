@@ -1,7 +1,5 @@
 package br.com.orderservice.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.orderservice.model.payload.OrderPayload;
 import br.com.orderservice.model.response.OrderResponse;
@@ -29,10 +28,12 @@ public class OrderController implements OrderApi {
 	@PostMapping
 	@Override
 	public ResponseEntity<OrderResponse> create(@RequestBody OrderPayload payload) {
+		final var response = service.create(payload);
 
-		service.create(payload);
+		final var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/order/{orderNumber}")
+				.buildAndExpand(response.getCustomerNumber()).toUri();
 
-		return null;
+		return ResponseEntity.created(uri).body(response);
 	}
 
 	@GetMapping("/order/{orderNumber}")
