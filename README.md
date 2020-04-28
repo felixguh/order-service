@@ -36,8 +36,7 @@ Passo 8: Clique na opção Run As.
 
 Passo 9: Clique na opção Spring Boot App.
 
-Ou rode via terminal: acesse a seguinte pasta order-service/build/libs e rode o comando java -jar product-service-0.0.1-SNAPSHOT.jar
-
+Ou rode via terminal: acesse a seguinte pasta order-service/build/libs e rode o comando java -jar order-service-0.0.1-SNAPSHOT.jar
 
 Para acessar o Swagger da aplicação o utilize a rota: http://localhost:8082/api/order-service/swagger-ui.html
 
