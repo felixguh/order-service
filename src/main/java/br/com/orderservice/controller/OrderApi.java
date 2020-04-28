@@ -28,8 +28,8 @@ public interface OrderApi {
 			@ApiResponse(code = 204, message = "Order not exists"),
 			@ApiResponse(code = 400, message = "Wrong information was sent", response = ErrorResponse.class),
 			@ApiResponse(code = 500, message = "An unexpected error occurred", response = ErrorResponse.class) })
-	OrderResponse findByProductNumber(
-			@ApiParam(value = "Product number", required = true, example = "1") final Long productNumber);
+	OrderResponse findByOrderNumber(
+			@ApiParam(value = "Order number", required = true, example = "1") final Long orderNumber);
 	
 	
 
