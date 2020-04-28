@@ -1,5 +1,6 @@
 package br.com.orderservice.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ public class OrderController implements OrderApi {
 
 	private final OrderService service;
 
+	@Autowired
 	public OrderController(final OrderService service) {
 		this.service = service;
 	}
