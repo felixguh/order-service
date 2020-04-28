@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import br.com.orderservice.common.model.ErrorResponse;
 import br.com.orderservice.exception.CustomerServiceNotFoundException;
+import br.com.orderservice.exception.ProductNotFoundException;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
@@ -31,14 +32,18 @@ public class ExceptionHandlerController {
 	public ExceptionHandlerController(final MessageSource messageSource) {
 		this.messageSource = messageSource;
 	}
-	
-	
-	
+
 	@ExceptionHandler(CustomerServiceNotFoundException.class)
-    @ResponseStatus(PRECONDITION_FAILED)
-    public ErrorResponse handleCustomerServiceNotFoundException() {
-        return ErrorResponse.as(message("customer.notFound"));
-    }
+	@ResponseStatus(PRECONDITION_FAILED)
+	public ErrorResponse handleCustomerServiceNotFoundException() {
+		return ErrorResponse.as(message("customer.notFound"));
+	}
+
+	@ExceptionHandler(ProductNotFoundException.class)
+	@ResponseStatus(PRECONDITION_FAILED)
+	public ErrorResponse handleProductNotFoundException(ProductNotFoundException ex) {
+		return ErrorResponse.as(message("product.notFound", new Object[] { ex.getProductNumber() }));
+	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(code = BAD_REQUEST)
