@@ -2,6 +2,7 @@
 server:
   servlet:
     context-path: /api/order-service
+  port: 8082
 
 spring:
   data:
@@ -11,11 +12,11 @@ spring:
       database: orders
 
 customer-service:
-    url: http://localhost:8081/api/customer-service
+    url: http://localhost:8081/api/customer-service/v1/customers
     endpoints:
         findCustomerByCustomerNumber: /customer/{customerNumber}
 
 product-service:
-    url: http://localhost:8080/api/product-service
+    url: http://localhost:8080/api/product-service/v1/products
     endpoints: 
         findProductByProductNumber: /product/{productNumber}
