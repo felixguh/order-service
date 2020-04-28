@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  mongodb-order-service:
+    image: mongo:latest
+    container_name: mongodb-order-service
+    ports:
+      - 27019:27017
+    volumes:
+      - ./volume/db:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=orders
+    networks:
+      - development-network
+networks:
+ development-network:
+   driver: bridge
