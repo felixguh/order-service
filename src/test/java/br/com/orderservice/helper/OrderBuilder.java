@@ -20,5 +20,10 @@ public class OrderBuilder {
 	public Optional<Order> optional(){
 		return Optional.of(this.dataToMock);
 	}
+	
+	public Order now(){
+		return this.dataToMock;
+	}
+	
 
 }
