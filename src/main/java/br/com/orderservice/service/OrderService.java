@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.function.Supplier;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,10 @@ public class OrderService {
 	private final CustomerClient customerClient;
 	private final ProductClient productClient;
 
+	@Autowired
 	public OrderService(final OrderRepository repository, final CustomerClient customerClient,
 			final ProductClient productClient) {
+		
 		this.repository = repository;
 		this.customerClient = customerClient;
 		this.productClient = productClient;
