@@ -1,6 +1,7 @@
 package br.com.orderservice.exception.handler;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.PRECONDITION_FAILED;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import br.com.orderservice.common.model.ErrorResponse;
+import br.com.orderservice.exception.CustomerServiceNotFoundException;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
@@ -28,6 +31,14 @@ public class ExceptionHandlerController {
 	public ExceptionHandlerController(final MessageSource messageSource) {
 		this.messageSource = messageSource;
 	}
+	
+	
+	
+	@ExceptionHandler(CustomerServiceNotFoundException.class)
+    @ResponseStatus(PRECONDITION_FAILED)
+    public ErrorResponse handleCustomerServiceNotFoundException() {
+        return ErrorResponse.as(message("customer.notFound"));
+    }
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(code = BAD_REQUEST)
