@@ -38,8 +38,8 @@ public class OrderController implements OrderApi {
 
 	@GetMapping("/order/{orderNumber}")
 	@Override
-	public OrderResponse findByProductNumber(@PathVariable final Long productNumber) {
-		return null;
+	public OrderResponse findByOrderNumber(@PathVariable final Long orderNumber) {
+		return service.findOrderByOrderNumber(orderNumber);
 	}
 
 }
